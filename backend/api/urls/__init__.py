@@ -1,3 +1,5 @@
-from backend.api.urls.greet import urlpatterns as greet_urls
+from django.urls import path, include
 
-urlpatterns = greet_urls
+urlpatterns = [
+    path("", include("backend.api.urls.users")),
+] 
