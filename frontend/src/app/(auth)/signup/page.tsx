@@ -8,12 +8,12 @@ import axios from "axios";
 export default function SignupPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
-    confirmPassword: "",
-    firstName: "",
-    lastName: "",
-    role: "brand", // Default to brand
+    confirm_password: "",
+    account_type: "individual",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,8 +21,7 @@ export default function SignupPage() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,53 +29,50 @@ export default function SignupPage() {
     setError("");
     setLoading(true);
 
-    // Validate passwords match
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.password !== formData.confirm_password) {
       setError("Passwords do not match");
       setLoading(false);
       return;
     }
 
     try {
-      // Register with the backend
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/register/`,
-        {
-          email: formData.email,
-          password: formData.password,
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          role: formData.role,
-        }
-      );
+      const response = await axios.post("/api/v1/auth/register/", {
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        email: formData.email,
+        password: formData.password,
+        account_type: formData.account_type,
+      });
 
-      // Redirect to login page
-      router.push("/login?registered=true");
+      if (response.data) {
+        router.push("/login?registered=true");
+      }
     } catch (error: any) {
-      console.error(
-        "Registration error:",
-        error.response?.data || error.message
+      setError(
+        error.response?.data?.message || "An error occurred during registration"
       );
-      setError(error.response?.data?.message || "Registration failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
+          <h1 className="text-center text-3xl font-bold text-indigo-600">
+            Reachly
+          </h1>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
             Create your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Or{" "}
+            Already have an account?{" "}
             <Link
               href="/login"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
-              sign in to your account
+              Sign in
             </Link>
           </p>
         </div>
@@ -84,38 +80,45 @@ export default function SignupPage() {
           <div className="space-y-4 rounded-md shadow-sm">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="firstName" className="sr-only">
-                  First Name
+                <label
+                  htmlFor="first_name"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  First name
                 </label>
                 <input
-                  id="firstName"
-                  name="firstName"
+                  id="first_name"
+                  name="first_name"
                   type="text"
                   required
-                  className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  placeholder="First Name"
-                  value={formData.firstName}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  value={formData.first_name}
                   onChange={handleChange}
                 />
               </div>
               <div>
-                <label htmlFor="lastName" className="sr-only">
-                  Last Name
+                <label
+                  htmlFor="last_name"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Last name
                 </label>
                 <input
-                  id="lastName"
-                  name="lastName"
+                  id="last_name"
+                  name="last_name"
                   type="text"
                   required
-                  className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  placeholder="Last Name"
-                  value={formData.lastName}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  value={formData.last_name}
                   onChange={handleChange}
                 />
               </div>
             </div>
             <div>
-              <label htmlFor="email" className="sr-only">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email address
               </label>
               <input
@@ -124,59 +127,66 @@ export default function SignupPage() {
                 type="email"
                 autoComplete="email"
                 required
-                className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Email address"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                placeholder="you@example.com"
                 value={formData.email}
                 onChange={handleChange}
               />
             </div>
             <div>
-              <label htmlFor="role" className="sr-only">
-                Account Type
-              </label>
-              <select
-                id="role"
-                name="role"
-                required
-                className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={formData.role}
-                onChange={handleChange}
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
               >
-                <option value="brand">Brand</option>
-                <option value="influencer">Influencer</option>
-              </select>
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
                 Password
               </label>
               <input
                 id="password"
                 name="password"
                 type="password"
-                autoComplete="new-password"
                 required
-                className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Password"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                placeholder="••••••••"
                 value={formData.password}
                 onChange={handleChange}
               />
             </div>
             <div>
-              <label htmlFor="confirmPassword" className="sr-only">
-                Confirm Password
+              <label
+                htmlFor="confirm_password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Confirm password
               </label>
               <input
-                id="confirmPassword"
-                name="confirmPassword"
+                id="confirm_password"
+                name="confirm_password"
                 type="password"
-                autoComplete="new-password"
                 required
-                className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Confirm Password"
-                value={formData.confirmPassword}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                placeholder="••••••••"
+                value={formData.confirm_password}
                 onChange={handleChange}
               />
+            </div>
+            <div>
+              <label
+                htmlFor="account_type"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Account type
+              </label>
+              <select
+                id="account_type"
+                name="account_type"
+                required
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                value={formData.account_type}
+                onChange={handleChange}
+              >
+                <option value="individual">Individual</option>
+                <option value="business">Business</option>
+              </select>
             </div>
           </div>
 
