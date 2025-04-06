@@ -23,7 +23,11 @@ class TimezoneMixin:
     def initial(self, request, *args, **kwargs):
         super().initial(request, *args, **kwargs)
         if request.user.is_authenticated:
-            timezone.activate(zoneinfo.ZoneInfo(request.user.user_timezone))
+            try:
+                user_timezone = getattr(request.user, 'user_timezone', 'UTC')
+                timezone.activate(zoneinfo.ZoneInfo(user_timezone))
+            except (zoneinfo.ZoneInfoNotFoundError, AttributeError):
+                timezone.activate('UTC')
         else:
             timezone.deactivate()
 

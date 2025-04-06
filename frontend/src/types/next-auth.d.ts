@@ -5,12 +5,14 @@ declare module "next-auth" {
     id: string;
     email: string;
     name: string;
-    role: "brand" | "influencer";
+    role: string;
+    accessToken: string;
+    refreshToken: string;
   }
 
   interface Session {
-    user: User & {
-      role: "brand" | "influencer";
-    };
+    user: User;
+    accessToken: string;
+    refreshToken: string;
   }
 }
