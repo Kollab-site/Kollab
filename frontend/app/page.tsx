@@ -1,21 +1,22 @@
 "use client";
 
-import { Navbar } from "./components/navigation/Navbar";
+import { motion } from "framer-motion";
+import { Container } from "./components/ui/Container";
+import { Card } from "./components/ui/Card";
+import { Grid } from "./components/ui/Grid";
+import { SectionHeader } from "./components/ui/SectionHeader";
 import { Hero } from "./components/sections/Hero";
 import { Stats } from "./components/sections/Stats";
 import { Features } from "./components/sections/Features";
-import { Footer } from "./components/layout/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white to-gray-50">
-      <Navbar />
-      <div className="pt-16">
+    <div className="min-h-screen bg-gradient-to-b from-white to-indigo-50">
+      <main>
         <Hero />
         <Stats />
         <Features />
-        <Footer />
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
