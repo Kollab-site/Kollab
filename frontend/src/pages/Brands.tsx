@@ -116,7 +116,7 @@ const Brands = () => {
             </div>
           </div>
         </Container>
-        <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-background to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t"></div>
       </section>
 
       {/* Business Impact Section */}

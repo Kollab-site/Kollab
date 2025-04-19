@@ -74,14 +74,14 @@ const CTASection = () => {
             >
               Get Started For Free
             </Button>
-            <Button 
+            {/* <Button 
               variant="outline" 
               size="lg"
               leftIcon={<MessageSquare size={20} />}
               className="backdrop-blur border-white/20 text-white hover:bg-white/20"
             >
               Schedule Demo
-            </Button>
+            </Button> */}
           </motion.div>
           
           <motion.div 
@@ -91,7 +91,7 @@ const CTASection = () => {
             viewport={{ once: true }}
             className="mt-6 text-sm text-white/70"
           >
-            No credit card required • Free 14-day trial
+            {/* No credit card required • Free 14-day trial */}
           </motion.div>
         </div>
       </div>

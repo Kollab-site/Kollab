@@ -100,20 +100,20 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <Mail className="mr-2 h-5 w-5 text-gray-400" />
-                <a href="mailto:info@influence.io" className="text-gray-300 hover:text-white transition-colors">
-                  info@influence.io
+                <a href="mailto:yadavanurag1310@gmail.com" className="text-gray-300 hover:text-white transition-colors">
+                  yadavanurag1310@gmail.com
                 </a>
               </li>
               <li className="flex items-start">
                 <Phone className="mr-2 h-5 w-5 text-gray-400" />
-                <a href="tel:+1234567890" className="text-gray-300 hover:text-white transition-colors">
-                  +1 (234) 567-890
+                <a href="tel:+91 9721683053" className="text-gray-300 hover:text-white transition-colors">
+                  +91 9721683053
                 </a>
               </li>
               <li className="flex items-start">
                 <MapPin className="mr-2 h-5 w-5 text-gray-400" />
                 <span className="text-gray-300">
-                  123 Innovation Ave, San Francisco, CA 94107
+                  Bangalore
                 </span>
               </li>
             </ul>
