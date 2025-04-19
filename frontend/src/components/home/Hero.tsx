@@ -53,12 +53,12 @@ const Hero = () => {
               >
                 Get Started
               </Button>
-              <Button 
+              {/* <Button 
                 size="lg" 
                 variant="secondary"
               >
                 Book a Demo
-              </Button>
+              </Button> */}
             </motion.div>
             <motion.div 
               initial={{ opacity: 0 }}
@@ -66,7 +66,7 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
               className="mt-6 text-sm text-gray-500"
             >
-              No credit card required • Free 14-day trial
+              {/* No credit card required • Free 14-day trial */}
             </motion.div>
           </motion.div>
           <motion.div 
