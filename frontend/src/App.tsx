@@ -4,7 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ScrollToTop from "./ScrollToTop"; // ✅ Import this
+import ScrollToTop from "./ScrollToTop"; 
 import Index from "./pages/Index";
 import Brands from "./pages/Brands";
 import Creators from "./pages/Creators";
@@ -21,7 +21,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <ScrollToTop /> {/* ✅ This ensures scroll resets on page change */}
+        <ScrollToTop /> 
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/brands" element={<Brands />} />
