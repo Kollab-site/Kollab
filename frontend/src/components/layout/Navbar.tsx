@@ -1,21 +1,13 @@
-
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
-import Button from '../common/Button';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import Button from "../common/Button";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [authType, setAuthType] = useState<'signin' | 'signup'>('signin');
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-  };
-
-  const openAuthModal = (type: 'signin' | 'signup') => {
-    setAuthType(type);
-    setShowAuthModal(true);
   };
 
   return (
@@ -25,39 +17,49 @@ const Navbar = () => {
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <Link to="/" className="flex items-center">
-                <span className="text-2xl font-bold bg-gradient-primary text-transparent bg-clip-text">Influence.io</span>
+                <span className="text-2xl font-bold bg-gradient-primary text-transparent bg-clip-text">
+                  Influence.io
+                </span>
               </Link>
             </div>
             <div className="hidden md:ml-12 md:flex md:space-x-8">
-              <Link to="/" className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2 border-transparent hover:border-brand-purple transition-colors">
+              <Link
+                to="/"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2 border-transparent hover:border-brand-purple transition-colors"
+              >
                 Home
               </Link>
-              <Link to="/brands" className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-brand-purple hover:text-gray-900 transition-colors">
+              <Link
+                to="/brands"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-brand-purple hover:text-gray-900 transition-colors"
+              >
                 For Brands
               </Link>
-              <Link to="/creators" className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-brand-purple hover:text-gray-900 transition-colors">
+              <Link
+                to="/creators"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-brand-purple hover:text-gray-900 transition-colors"
+              >
                 For Creators
               </Link>
-              <Link to="/about" className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-brand-purple hover:text-gray-900 transition-colors">
+              <Link
+                to="/about"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-brand-purple hover:text-gray-900 transition-colors"
+              >
                 About
               </Link>
             </div>
           </div>
           <div className="hidden md:flex items-center space-x-4">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => openAuthModal('signin')}
-            >
-              Sign In
-            </Button>
-            <Button 
-              variant="primary" 
-              size="sm" 
-              onClick={() => openAuthModal('signup')}
-            >
-              Sign Up
-            </Button>
+            <Link to="/signin">
+              <Button variant="outline" size="sm">
+                Sign In
+              </Button>
+            </Link>
+            <Link to="/signup">
+              <Button variant="primary" size="sm">
+                Sign Up
+              </Button>
+            </Link>
           </div>
           <div className="-mr-2 flex items-center md:hidden">
             <button
@@ -65,14 +67,18 @@ const Navbar = () => {
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-purple"
             >
               <span className="sr-only">Open main menu</span>
-              {isMenuOpen ? <X className="block h-6 w-6" /> : <Menu className="block h-6 w-6" />}
+              {isMenuOpen ? (
+                <X className="block h-6 w-6" />
+              ) : (
+                <Menu className="block h-6 w-6" />
+              )}
             </button>
           </div>
         </div>
       </div>
 
       {/* Mobile menu */}
-      <div className={`${isMenuOpen ? 'block' : 'hidden'} md:hidden`}>
+      <div className={`${isMenuOpen ? "block" : "hidden"} md:hidden`}>
         <div className="pt-2 pb-3 space-y-1">
           <Link
             to="/"
@@ -105,28 +111,16 @@ const Navbar = () => {
         </div>
         <div className="pt-4 pb-3 border-t border-gray-200">
           <div className="flex items-center px-4 space-x-3">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              isFullWidth
-              onClick={() => {
-                openAuthModal('signin');
-                toggleMenu();
-              }}
-            >
-              Sign In
-            </Button>
-            <Button 
-              variant="primary" 
-              size="sm" 
-              isFullWidth
-              onClick={() => {
-                openAuthModal('signup');
-                toggleMenu();
-              }}
-            >
-              Sign Up
-            </Button>
+            <Link to="/signin" className="flex-1" onClick={toggleMenu}>
+              <Button variant="outline" size="sm" isFullWidth>
+                Sign In
+              </Button>
+            </Link>
+            <Link to="/signup" className="flex-1" onClick={toggleMenu}>
+              <Button variant="primary" size="sm" isFullWidth>
+                Sign Up
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
