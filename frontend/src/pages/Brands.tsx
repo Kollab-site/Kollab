@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -15,7 +14,7 @@ const Brands = () => {
   const impactData = [
     {
       title: "Increased ROI",
-      description: "Brands using Influence.io see 3-5x higher return on influencer marketing investments",
+      description: "Brands using Kollab see 3-5x higher return on influencer marketing investments",
       icon: <TrendingUp className="text-brand-orange h-10 w-10" />,
       stat: "324%",
       statLabel: "Average ROI"
@@ -182,7 +181,7 @@ const Brands = () => {
               Meet Our Team
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              The passionate experts behind Influence.io who are dedicated to your success.
+              The passionate experts behind Kollab who are dedicated to your success.
             </p>
           </div>
 

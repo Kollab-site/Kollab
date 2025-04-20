@@ -1,4 +1,4 @@
-
+import logo3 from "../../assets/logo3.jpeg";
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -18,9 +18,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand and description */}
           <div>
-            <Link to="/" className="text-2xl font-bold bg-gradient-primary text-transparent bg-clip-text">
-              Influence.io
-            </Link>
+          <Link to="/">
+          <img src={logo3} alt="Kollab Logo" className="h-[60px] w-auto" />
+          </Link>
+
             <p className="mt-4 text-gray-300 text-sm">
               Connect brands with the perfect influencers. Simplify influencer marketing with data-driven matching, seamless communication, and secure payments.
             </p>
@@ -121,7 +122,7 @@ const Footer = () => {
         </div>
         <div className="mt-12 pt-8 border-t border-gray-800 text-center">
           <p className="text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} Influence.io. All rights reserved.
+            &copy; {new Date().getFullYear()} Kollab.site. All rights reserved.
           </p>
         </div>
       </div>

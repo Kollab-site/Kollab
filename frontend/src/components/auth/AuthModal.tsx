@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Dialog, 
@@ -70,7 +69,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'signin' }: AuthModalProps) =
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="text-2xl gradient-text font-bold">
-              Influence.io
+              Kollab
             </DialogTitle>
             <button 
               onClick={onClose}

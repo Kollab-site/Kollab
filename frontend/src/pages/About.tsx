@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -56,7 +55,7 @@ const About = () => {
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6 gradient-text">Our Story</h2>
               <p className="text-lg text-gray-700 mb-6">
-                Founded in 2020, Influence.io was born from a simple observation: influencer marketing was needlessly complex, opaque, and inefficient.
+                Founded in 2020, Kollab was born from a simple observation: influencer marketing was needlessly complex, opaque, and inefficient.
               </p>
               <p className="text-lg text-gray-700 mb-6">
                 Our founders, who had experience on both sides of the equation—as marketing executives and content creators—saw an opportunity to build a platform that would make influencer collaborations more transparent, data-driven, and rewarding for everyone involved.
@@ -224,7 +223,7 @@ const About = () => {
               Meet Our Leadership
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              The visionaries behind Influence.io who are driving our mission forward.
+              The visionaries behind Kollab who are driving our mission forward.
             </p>
           </motion.div>
 
@@ -282,7 +281,7 @@ const About = () => {
                 <h3 className="text-xl font-bold mb-1">Sarah Chen</h3>
                 <p className="text-brand-purple font-semibold mb-3">COO & Co-Founder</p>
                 <p className="text-gray-600 text-sm">
-                  Built influencer networks for major brands like Nike and Spotify before co-founding Influence.io.
+                  Built influencer networks for major brands like Nike and Spotify before co-founding Kollab.
                 </p>
                 <div className="flex space-x-3 mt-4">
                   <a href="#" className="text-gray-400 hover:text-brand-purple transition-colors">
@@ -383,7 +382,7 @@ const About = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">
-              Why Choose Influence.io
+              Why Choose Kollab
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               What sets us apart from other influencer marketing platforms.
@@ -528,8 +527,8 @@ const About = () => {
             <div>
               <h3 className="text-lg font-semibold mb-2">Email Us</h3>
               <p className="text-gray-600">For queries and support, drop us a line:</p>
-              <a href="mailto:info@influence.io" className="text-brand-purple hover:underline block mt-1">info@influence.io</a>
-              <a href="mailto:support@influence.io" className="text-brand-purple hover:underline block">support@influence.io</a>
+              <a href="mailto:info@kollab.com" className="text-brand-purple hover:underline block mt-1">info@kollab.com</a>
+              <a href="mailto:support@kollab.com" className="text-brand-purple hover:underline block">support@kollab.com</a>
             </div>
           </div>
 

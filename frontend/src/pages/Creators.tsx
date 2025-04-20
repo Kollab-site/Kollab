@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -15,7 +14,7 @@ const Creators = () => {
   const impactData = [
     {
       title: "Higher Earnings",
-      description: "Creators on Influence.io earn 40% more than on traditional platforms",
+      description: "Creators on Kollab earn 40% more than on traditional platforms",
       icon: <TrendingUp className="text-brand-blue h-10 w-10" />,
       stat: "40%",
       statLabel: "More Revenue"
@@ -294,7 +293,7 @@ const Creators = () => {
                   <div className="space-y-4">
                     <h3 className="text-xl font-bold">Hear from successful creators</h3>
                     <p className="text-gray-600">
-                      "Influence.io transformed my creator business. I was able to increase my brand deals by 300% in just the first 6 months, all while staying true to my content vision."
+                      "Kollab transformed my creator business. I was able to increase my brand deals by 300% in just the first 6 months, all while staying true to my content vision."
                     </p>
                     <div className="flex items-center">
                       <img 
