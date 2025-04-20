@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Button from "../common/Button";
 
@@ -23,30 +23,54 @@ const Navbar = () => {
               </Link>
             </div>
             <div className="hidden md:ml-12 md:flex md:space-x-8">
-              <Link
+              <NavLink
                 to="/"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2 border-transparent hover:border-brand-purple transition-colors"
+                className={({ isActive }) =>
+                  `inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 transition-colors ${
+                    isActive
+                      ? "text-gray-900 border-brand-purple"
+                      : "text-gray-500 border-transparent hover:border-brand-purple hover:text-gray-900"
+                  }`
+                }
               >
                 Home
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/brands"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-brand-purple hover:text-gray-900 transition-colors"
+                className={({ isActive }) =>
+                  `inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 transition-colors ${
+                    isActive
+                      ? "text-gray-900 border-brand-purple"
+                      : "text-gray-500 border-transparent hover:border-brand-purple hover:text-gray-900"
+                  }`
+                }
               >
                 For Brands
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/creators"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-brand-purple hover:text-gray-900 transition-colors"
+                className={({ isActive }) =>
+                  `inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 transition-colors ${
+                    isActive
+                      ? "text-gray-900 border-brand-purple"
+                      : "text-gray-500 border-transparent hover:border-brand-purple hover:text-gray-900"
+                  }`
+                }
               >
                 For Creators
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/about"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-brand-purple hover:text-gray-900 transition-colors"
+                className={({ isActive }) =>
+                  `inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 transition-colors ${
+                    isActive
+                      ? "text-gray-900 border-brand-purple"
+                      : "text-gray-500 border-transparent hover:border-brand-purple hover:text-gray-900"
+                  }`
+                }
               >
                 About
-              </Link>
+              </NavLink>
             </div>
           </div>
           <div className="hidden md:flex items-center space-x-4">
@@ -80,34 +104,58 @@ const Navbar = () => {
       {/* Mobile menu */}
       <div className={`${isMenuOpen ? "block" : "hidden"} md:hidden`}>
         <div className="pt-2 pb-3 space-y-1">
-          <Link
+          <NavLink
             to="/"
-            className="block pl-3 pr-4 py-2 border-l-4 border-brand-purple text-base font-medium text-brand-purple bg-purple-50"
+            className={({ isActive }) =>
+              `block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                isActive
+                  ? "text-brand-purple bg-purple-50 border-brand-purple"
+                  : "text-gray-600 border-transparent hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
+              }`
+            }
             onClick={toggleMenu}
           >
             Home
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/brands"
-            className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
+            className={({ isActive }) =>
+              `block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                isActive
+                  ? "text-brand-purple bg-purple-50 border-brand-purple"
+                  : "text-gray-600 border-transparent hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
+              }`
+            }
             onClick={toggleMenu}
           >
             For Brands
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/creators"
-            className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
+            className={({ isActive }) =>
+              `block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                isActive
+                  ? "text-brand-purple bg-purple-50 border-brand-purple"
+                  : "text-gray-600 border-transparent hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
+              }`
+            }
             onClick={toggleMenu}
           >
             For Creators
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/about"
-            className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
+            className={({ isActive }) =>
+              `block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                isActive
+                  ? "text-brand-purple bg-purple-50 border-brand-purple"
+                  : "text-gray-600 border-transparent hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
+              }`
+            }
             onClick={toggleMenu}
           >
             About
-          </Link>
+          </NavLink>
         </div>
         <div className="pt-4 pb-3 border-t border-gray-200">
           <div className="flex items-center px-4 space-x-3">
