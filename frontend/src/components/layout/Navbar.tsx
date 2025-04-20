@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Button from "../common/Button";
+import logo from "../../assets/logo.png";
+import logo2 from "../../assets/logo2.png";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,11 +18,10 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <Link to="/" className="flex items-center">
-                <span className="text-2xl font-bold bg-gradient-primary text-transparent bg-clip-text">
-                  Influence.io
-                </span>
-              </Link>
+            <Link to="/" className="flex items-center">
+            <img src={logo} alt="Kollab Logo" className="h-[95px] w-auto" />
+            </Link>
+
             </div>
             <div className="hidden md:ml-12 md:flex md:space-x-8">
               <NavLink

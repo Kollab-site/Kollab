@@ -1,11 +1,10 @@
-
 import React from 'react';
 import Card, { CardContent } from '../common/Card';
 import { Star } from 'lucide-react';
 
 const testimonials = [
   {
-    quote: "Influence.io has completely transformed our influencer marketing strategy. We've seen a 40% increase in campaign ROI since switching to their platform.",
+    quote: "Kollab has completely transformed our influencer marketing strategy. We've seen a 40% increase in campaign ROI since switching to their platform.",
     author: "Sarah Johnson",
     title: "Marketing Director at FashionBrand",
     avatar: "https://randomuser.me/api/portraits/women/32.jpg",
@@ -36,7 +35,7 @@ const Testimonials = () => {
             <span className="gradient-text">What Our Users Say</span>
           </h2>
           <p className="mt-4 text-xl text-gray-600">
-            Join hundreds of brands and thousands of influencers who trust Influence.io
+            Join hundreds of brands and thousands of influencers who trust Kollab
           </p>
         </div>
 

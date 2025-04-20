@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import Button from '../common/Button';
@@ -82,7 +81,7 @@ const Hero = () => {
                 animate={{ scale: 1 }}
                 transition={{ duration: 1.2, ease: "easeOut" }}
                 src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                alt="Influence.io platform" 
+                alt="Kollab platform" 
                 className="w-full h-auto object-cover"
               />
             </div>

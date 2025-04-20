@@ -56,7 +56,7 @@ const CTASection = () => {
             viewport={{ once: true }}
             className="mt-6 text-xl text-white/90"
           >
-            Join thousands of brands and influencers already using Influence.io to create successful partnerships and drive real results.
+            Join thousands of brands and influencers already using kollab.site to create successful partnerships and drive real results.
           </motion.p>
           
           <motion.div 

@@ -35,7 +35,7 @@ const SignUp = () => {
           <CardHeader>
             <CardTitle>Create an account</CardTitle>
             <CardDescription className="text-sm text-gray-600">
-              Sign up as Brand or Influencer to get started with Influence.io
+              Sign up as Brand or Influencer to get started with Kollab
             </CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
