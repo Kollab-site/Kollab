@@ -102,6 +102,7 @@ class InfluencerAdmin(admin.ModelAdmin):
         "content_type",
     )
     readonly_fields = ("created_at", "updated_at")
+    ordering = ("-created_at",)
 
 
 @admin.register(Brand)
@@ -123,4 +124,5 @@ class BrandAdmin(admin.ModelAdmin):
         "user__username",
         "user__email",
     )
-    readonly_fields = ("created_at", "updated_at") 
+    readonly_fields = ("created_at", "updated_at")
+    ordering = ("-created_at",) 

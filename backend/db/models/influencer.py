@@ -96,6 +96,10 @@ class Influencer(BaseModel):
         help_text="Primary location for content creation"
     )
     is_verified = models.BooleanField(default=False)
+
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
         verbose_name = "Influencer"

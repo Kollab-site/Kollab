@@ -93,6 +93,10 @@ class Brand(BaseModel):
     website = models.URLField(blank=True)
     company_description = models.TextField(blank=True)
     is_verified = models.BooleanField(default=False)
+
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
         verbose_name = "Brand"

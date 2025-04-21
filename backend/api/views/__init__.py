@@ -1,6 +1,7 @@
 from .base import BaseViewSet, BaseAPIView, TimezoneMixin
 from .users import UserEndpoint, UpdateUserOnBoardedEndpoint
-from .profiles import InfluencerViewSet, BrandViewSet
+from .influencer import InfluencerViewSet
+from .brand import BrandViewSet
 
 __all__ = [
     'BaseViewSet',
