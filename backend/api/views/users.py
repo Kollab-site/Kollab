@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.decorators import action
+
 
 from backend.api.serializers.users import (
     UserMeSerializer, 

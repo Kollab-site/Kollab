@@ -1,5 +1,5 @@
 # Python imports
-import zoneinfo
+from backports import zoneinfo
 
 # Django imports
 from django.utils import timezone
