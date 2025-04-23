@@ -1,5 +1,4 @@
 # Module imports
-
 from rest_framework import serializers, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
