@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -12,69 +12,80 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/common/Container";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
 
 const SignIn = () => {
-  const [role, setRole] = useState("brand");
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Logging in as:", role);
+
+    try {
+      const response = await fetch("http://localhost:8000/api/v1/auth/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Save tokens in localStorage or cookie
+        localStorage.setItem("accessToken", data.tokens.access);
+        localStorage.setItem("refreshToken", data.tokens.refresh);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        // Redirect to homepage or dashboard
+        navigate("/");
+      } else {
+        setErrorMsg(data.message || "Login failed");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setErrorMsg("An unexpected error occurred");
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
       <Container size="sm" className="py-12">
-        <Card className="w-full max-w-lg mx-auto bg-white shadow-md border border-gray-200 transition-transform duration-300 transform hover:scale-[1.005] focus-within:scale-[1.005]">
+        <Card className="w-full max-w-lg mx-auto bg-white shadow-md border border-gray-200">
           <CardHeader>
             <CardTitle>Welcome Back</CardTitle>
-            <CardDescription className="text-sm text-gray-600">
-              Sign in to your account to continue
-            </CardDescription>
+            <CardDescription>Sign in to your account to continue</CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="role">Logging in As</Label>
-                <Select value={role} onValueChange={setRole}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Role" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="admin">Admin</SelectItem>
-                    <SelectItem value="brand">Brand</SelectItem>
-                    <SelectItem value="influencer">Influencer</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
+              {errorMsg && <p className="text-red-500 text-sm">{errorMsg}</p>}
+              <div>
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="Enter your email" required />
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
               </div>
-              <div className="space-y-2">
+              <div>
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" placeholder="Enter your password" required />
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
               </div>
             </CardContent>
-            <CardFooter className="flex flex-col space-y-4">
-              <Button
-                type="submit"
-                className="w-full bg-purple-600 text-white hover:bg-purple-700 transition-all"
-              >
-                Sign In as {role.charAt(0).toUpperCase() + role.slice(1)}
+            <CardFooter>
+              <Button type="submit" className="w-full">
+                Sign In
               </Button>
-              <p className="text-sm text-center text-gray-700">
-                Don't have an account?{" "}
-                <Link to="/signup" className="text-purple-600 font-semibold underline">
-                  Sign up
-                </Link>
-              </p>
             </CardFooter>
           </form>
         </Card>

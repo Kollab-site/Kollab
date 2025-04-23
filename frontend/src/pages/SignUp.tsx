@@ -1,91 +1,117 @@
+// src/pages/SignUp.tsx
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/common/Container";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
 
-const SignUp = () => {
-  const [role, setRole] = useState("brand");
+interface SignUpForm {
+  username: string;
+  email: string;
+  password: string;
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
+const SignUp: React.FC = () => {
+  const navigate = useNavigate();
+  const [form, setForm] = useState<SignUpForm>({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Role:", role);
+    setLoading(true);
+    setError("");
+    try {
+      const res = await axios.post(
+        "http://localhost:8000/api/v1/auth/register/",
+        form
+      );
+      if (res.status === 201) {
+        navigate("/signin");
+      }
+    } catch (err: any) {
+      setError(err?.response?.data?.message || "Registration failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
       <Container size="sm" className="py-12">
-        <Card className="w-full max-w-lg mx-auto bg-white shadow-md border border-gray-200 transition-transform duration-300 transform hover:scale-[1.005] focus-within:scale-[1.005]">
+        <Card className="w-full max-w-lg mx-auto bg-white shadow-md border border-gray-200 transform transition-transform duration-300 hover:scale-[1.005]">
           <CardHeader>
-            <CardTitle>Create an account</CardTitle>
+            <CardTitle>Create an Account</CardTitle>
             <CardDescription className="text-sm text-gray-600">
-              Sign up as Brand or Influencer to get started with Kollab
+              Sign up to start your journey
             </CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="role">Registering As</Label>
-                <Select value={role} onValueChange={setRole}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Role" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="brand">Brand</SelectItem>
-                    <SelectItem value="influencer">Influencer</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div>
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  id="username"
+                  name="username"
+                  type="text"
+                  value={form.username}
+                  onChange={handleChange}
+                  placeholder="Choose a username"
+                  required
+                />
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name</Label>
-                  <Input id="firstName" placeholder="First name" required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name</Label>
-                  <Input id="lastName" placeholder="Last name" required />
-                </div>
-              </div>
-              <div className="space-y-2">
+              <div>
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="Email address" required />
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  required
+                />
               </div>
-              <div className="space-y-2">
+              <div>
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" placeholder="Create password" required />
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  placeholder="Create a password"
+                  required
+                />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
-                <Input id="confirmPassword" type="password" placeholder="Confirm password" required />
-              </div>
+              {error && <p className="text-sm text-red-500">{error}</p>}
             </CardContent>
-            <CardFooter className="flex flex-col space-y-4">
-              <Button
-                type="submit"
-                className="w-full bg-purple-600 text-white hover:bg-purple-700 transition-all"
-              >
-                Sign Up as {role.charAt(0).toUpperCase() + role.slice(1)}
+            <CardFooter className="flex flex-col gap-3">
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? "Signing up..." : "Sign Up"}
               </Button>
-              <p className="text-sm text-center text-gray-700">
+              <p className="text-sm text-center text-gray-600">
                 Already have an account?{" "}
-                <Link to="/signin" className="text-purple-600 font-semibold underline">
-                  Sign in
+                <Link to="/signin" className="text-blue-600 hover:underline">
+                  Sign In
                 </Link>
               </p>
             </CardFooter>
