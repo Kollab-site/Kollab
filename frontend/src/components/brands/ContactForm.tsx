@@ -1,30 +1,67 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, Check } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useToast } from '@/components/ui/use-toast';
 
 const ContactForm = () => {
   const [formState, setFormState] = useState({
-    name: '',
+    first_name: '',  // Changed to match backend
+    last_name: '',   // Changed to match backend
     email: '',
-    company: '',
+    company: '',     // Will be included in message
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormState(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    setTimeout(() => {
+    setIsSubmitting(true);
+
+    try {
+      // Prepare data for backend
+      const payload = {
+        first_name: formState.first_name,
+        last_name: formState.last_name,
+        email: formState.email,
+        message: `Company: ${formState.company}\n\nMessage: ${formState.message}`
+      };
+
+      const response = await fetch('/api/contact-us/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || errorData.error || 'Failed to submit form');
+      }
+
       setIsSubmitted(true);
-    }, 800);
+      toast({
+        title: "Success!",
+        description: "Your message has been sent successfully.",
+        variant: "default",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Something went wrong",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -51,23 +88,39 @@ const ContactForm = () => {
         {!isSubmitted ? (
           <form onSubmit={handleSubmit}>
             <div className="space-y-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  value={formState.name}
-                  onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-purple focus:ring-brand-purple sm:text-sm px-4 py-2 border"
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
+                    First Name*
+                  </label>
+                  <input
+                    type="text"
+                    id="first_name"
+                    name="first_name"
+                    required
+                    value={formState.first_name}
+                    onChange={handleChange}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-purple focus:ring-brand-purple sm:text-sm px-4 py-2 border"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">
+                    Last Name*
+                  </label>
+                  <input
+                    type="text"
+                    id="last_name"
+                    name="last_name"
+                    required
+                    value={formState.last_name}
+                    onChange={handleChange}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-purple focus:ring-brand-purple sm:text-sm px-4 py-2 border"
+                  />
+                </div>
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email Address
+                  Email Address*
                 </label>
                 <input
                   type="email"
@@ -94,7 +147,7 @@ const ContactForm = () => {
               </div>
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-                  How can we help?
+                  How can we help?*
                 </label>
                 <textarea
                   id="message"
@@ -109,9 +162,10 @@ const ContactForm = () => {
               <Button 
                 type="submit" 
                 className="w-full bg-brand-purple hover:bg-opacity-90 text-white font-medium rounded-lg px-6 py-3 transition-all duration-200"
+                disabled={isSubmitting}
               >
-                Send Message
-                <ArrowRight className="ml-2 h-5 w-5" />
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+                {!isSubmitting && <ArrowRight className="ml-2 h-5 w-5" />}
               </Button>
             </div>
           </form>
@@ -124,6 +178,21 @@ const ContactForm = () => {
             <p className="text-gray-600">
               We've received your message and will get back to you within 24 hours.
             </p>
+            <Button 
+              className="mt-6 bg-brand-purple hover:bg-opacity-90 text-white"
+              onClick={() => {
+                setIsSubmitted(false);
+                setFormState({
+                  first_name: '',
+                  last_name: '',
+                  email: '',
+                  company: '',
+                  message: ''
+                });
+              }}
+            >
+              Send Another Message
+            </Button>
           </div>
         )}
       </CardContent>
