@@ -10,7 +10,11 @@ from backend.api.serializers.users import (
     UserMeSerializer, 
     UserSerializer, 
     ChangePasswordSerializer,
-    ResetPasswordSerializer
+    ResetPasswordSerializer,
+    BrandSignupSerializer,
+    InfluencerSignupSerializer,
+    BrandSerializer,
+    InfluencerSerializer
 )
 from backend.db.models import User
 
@@ -21,6 +25,13 @@ class UserEndpoint(BaseViewSet):
     serializer_class = UserSerializer
     model = User
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.action == 'brand_signup':
+            return BrandSignupSerializer
+        elif self.action == 'influencer_signup':
+            return InfluencerSignupSerializer
+        return super().get_serializer_class()
 
     def get_object(self):
         return self.request.user
@@ -61,7 +72,7 @@ class UserEndpoint(BaseViewSet):
 
     # Authentication methods
     def get_permissions(self):
-        if self.action in ['login', 'register', 'reset_password', 'verify_email']:
+        if self.action in ['login', 'register', 'brand_signup', 'influencer_signup', 'reset_password', 'verify_email']:
             return [AllowAny()]
         return super().get_permissions()
         
@@ -206,6 +217,82 @@ class UserEndpoint(BaseViewSet):
             )
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def brand_signup(self, request):
+        serializer = self.get_serializer(data=request.data)
+        
+        try:
+            serializer.is_valid(raise_exception=True)
+            user = serializer.save()
+            
+            if 'password' in request.data:
+                user.set_password(request.data['password'])
+                user.save()
+                
+            # Create brand profile
+            brand_data = {
+                'user': user.id,
+                # Add other brand-specific fields from request.data
+            }
+            brand_serializer = BrandSerializer(data=brand_data)
+            if brand_serializer.is_valid():
+                brand_serializer.save()
+            else:
+                user.delete()  # Rollback user creation if brand profile creation fails
+                return Response(brand_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                
+            refresh = RefreshToken.for_user(user)
+            
+            return Response({
+                "user": UserMeSerializer(user).data,
+                "tokens": {
+                    "access": str(refresh.access_token),
+                    "refresh": str(refresh),
+                }
+            }, status=status.HTTP_201_CREATED)
+        except serializers.ValidationError as e:
+            return Response(
+                {"message": e.detail},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+    def influencer_signup(self, request):
+        serializer = self.get_serializer(data=request.data)
+        
+        try:
+            serializer.is_valid(raise_exception=True)
+            user = serializer.save()
+            
+            if 'password' in request.data:
+                user.set_password(request.data['password'])
+                user.save()
+                
+            # Create influencer profile
+            influencer_data = {
+                'user': user.id,
+                # Add other influencer-specific fields from request.data
+            }
+            influencer_serializer = InfluencerSerializer(data=influencer_data)
+            if influencer_serializer.is_valid():
+                influencer_serializer.save()
+            else:
+                user.delete()  # Rollback user creation if influencer profile creation fails
+                return Response(influencer_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                
+            refresh = RefreshToken.for_user(user)
+            
+            return Response({
+                "user": UserMeSerializer(user).data,
+                "tokens": {
+                    "access": str(refresh.access_token),
+                    "refresh": str(refresh),
+                }
+            }, status=status.HTTP_201_CREATED)
+        except serializers.ValidationError as e:
+            return Response(
+                {"message": e.detail},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 class UpdateUserOnBoardedEndpoint(BaseAPIView):

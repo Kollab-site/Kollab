@@ -165,3 +165,35 @@ class UserAdminLiteSerializer(BaseSerializer):
         read_only_fields = [
             "id",
         ]
+
+
+class BrandSignupSerializer(UserSerializer):
+    class Meta(UserSerializer.Meta):
+        fields = [
+            "email",
+            "password",
+            "username",
+            "first_name",
+            "last_name",
+            "mobile_number",
+        ]
+        extra_kwargs = {
+            "password": {"write_only": True},
+            "username": {"validators": []},
+        }
+
+
+class InfluencerSignupSerializer(UserSerializer):
+    class Meta(UserSerializer.Meta):
+        fields = [
+            "email",
+            "password",
+            "username",
+            "first_name",
+            "last_name",
+            "mobile_number",
+        ]
+        extra_kwargs = {
+            "password": {"write_only": True},
+            "username": {"validators": []},
+        }
