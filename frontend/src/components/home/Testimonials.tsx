@@ -5,23 +5,23 @@ import { Star } from 'lucide-react';
 const testimonials = [
   {
     quote: "Kollab has completely transformed our influencer marketing strategy. We've seen a 40% increase in campaign ROI since switching to their platform.",
-    author: "Sarah Johnson",
+    author: "Anuradha Sinha",
     title: "Marketing Director at FashionBrand",
-    avatar: "https://randomuser.me/api/portraits/women/32.jpg",
+    avatar: "https://randomuser.me/api/portraits/women/27.jpg",
     rating: 5
   },
   {
     quote: "As an influencer, I love how easy it is to find brand partnerships that align with my values. The platform is intuitive and the payment process is seamless.",
-    author: "Mark Rodriguez",
+    author: "Harshwardhan Singh",
     title: "Lifestyle Influencer, 500K+ followers",
-    avatar: "https://randomuser.me/api/portraits/men/46.jpg",
+    avatar: "https://randomuser.me/api/portraits/men/38.jpg",
     rating: 5
   },
   {
     quote: "The analytics and reporting features have given us unprecedented insights into our campaigns. We can finally measure true impact beyond vanity metrics.",
-    author: "Jennifer Williams",
+    author: "Jayanti Rana",
     title: "CMO at TechStartup",
-    avatar: "https://randomuser.me/api/portraits/women/65.jpg",
+    avatar: "https://randomuser.me/api/portraits/women/26.jpg",
     rating: 4
   }
 ];
