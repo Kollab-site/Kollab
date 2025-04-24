@@ -5,11 +5,15 @@ from .users import (
     ChangePasswordSerializer,
     ResetPasswordSerializer
 )
+from .brand import BrandSerializer
+from .influencer import InfluencerSerializer
 
 __all__ = [
     'BaseSerializer',
     'UserSerializer',
     'UserMeSerializer',
     'ChangePasswordSerializer',
-    'ResetPasswordSerializer'
+    'ResetPasswordSerializer',
+    'BrandSerializer',
+    'InfluencerSerializer',
 ]

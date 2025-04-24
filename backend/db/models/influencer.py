@@ -30,7 +30,6 @@ class Influencer(BaseModel):
             ("twitter", "Twitter"),
             ("facebook", "Facebook"),
             ("linkedin", "LinkedIn"),
-            ("pinterest", "Pinterest"),
         )
 
     user = models.OneToOneField(
@@ -45,62 +44,37 @@ class Influencer(BaseModel):
         choices=NICHE_CHOICES.CHOICES,
         default="other"
     )
-    content_type = models.CharField(
-        max_length=255,
-        help_text="Type of content you create (e.g., photos, videos, blogs)"
-    )
     
-    # Social Media Stats
-    instagram_followers = models.PositiveIntegerField(default=0)
-    youtube_subscribers = models.PositiveIntegerField(default=0)
-    tiktok_followers = models.PositiveIntegerField(default=0)
-    twitter_followers = models.PositiveIntegerField(default=0)
-    facebook_followers = models.PositiveIntegerField(default=0)
-    
-    # Engagement Metrics
-    average_engagement_rate = models.FloatField(
-        validators=[MinValueValidator(0), MaxValueValidator(100)],
-        help_text="Average engagement rate across platforms"
-    )
-    
-    # Platform Preferences
+    # Platform Information
     preferred_platforms = models.CharField(
         max_length=255,
         choices=PLATFORM_CHOICES.CHOICES,
-        help_text="Platforms you prefer to work with"
+        help_text="Primary platform for content creation"
     )
     
-    # Campaign Preferences
+    # Social Media Links
+    instagram_url = models.URLField(max_length=255, blank=True, null=True)
+    youtube_url = models.URLField(max_length=255, blank=True, null=True)
+    tiktok_url = models.URLField(max_length=255, blank=True, null=True)
+    twitter_url = models.URLField(max_length=255, blank=True, null=True)
+    facebook_url = models.URLField(max_length=255, blank=True, null=True)
+    linkedin_url = models.URLField(max_length=255, blank=True, null=True)
+    website_url = models.URLField(max_length=255, blank=True, null=True)
+    
+    # Budget Information
     min_campaign_budget = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         default=0,
-        help_text="Minimum budget for campaigns"
+        validators=[MinValueValidator(0)]
     )
     max_campaign_budget = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         default=0,
-        help_text="Maximum budget for campaigns"
+        validators=[MinValueValidator(0)]
     )
-    
-    # Additional Information
-    languages = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text="Languages you can create content in"
-    )
-    location = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text="Primary location for content creation"
-    )
-    is_verified = models.BooleanField(default=False)
 
-    # Timestamps
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
     class Meta:
         verbose_name = "Influencer"
         verbose_name_plural = "Influencers"
@@ -108,4 +82,4 @@ class Influencer(BaseModel):
         ordering = ("-created_at",)
 
     def __str__(self):
-        return f"Influencer: {self.user.username}" 
+        return f"Influencer: {self.user.username}"

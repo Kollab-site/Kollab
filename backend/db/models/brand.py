@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from .base import BaseModel
 from .users import User
@@ -46,58 +47,20 @@ class Brand(BaseModel):
         default="small"
     )
     
-    # Campaign Preferences
+    # Budget Information
     min_campaign_budget = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         default=0,
-        help_text="Minimum budget for campaigns"
+        validators=[MinValueValidator(0)]
     )
     max_campaign_budget = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         default=0,
-        help_text="Maximum budget for campaigns"
+        validators=[MinValueValidator(0)]
     )
-    
-    # Target Audience
-    target_audience_age = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text="Target age range (e.g., 18-24, 25-34)"
-    )
-    target_audience_gender = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text="Target gender"
-    )
-    target_audience_location = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text="Target locations"
-    )
-    
-    # Campaign Preferences
-    preferred_content_types = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text="Preferred types of content (e.g., photos, videos, stories)"
-    )
-    preferred_platforms = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text="Preferred social media platforms"
-    )
-    
-    # Additional Information
-    website = models.URLField(blank=True)
-    company_description = models.TextField(blank=True)
-    is_verified = models.BooleanField(default=False)
 
-    # Timestamps
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
     class Meta:
         verbose_name = "Brand"
         verbose_name_plural = "Brands"

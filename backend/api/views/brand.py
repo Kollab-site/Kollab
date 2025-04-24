@@ -2,8 +2,8 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from backend.api.serializers.brand import BrandSerializer
 from backend.db.models.brand import Brand
+from backend.api.serializers.brand import BrandSerializer
 from .base import BaseViewSet
 
 

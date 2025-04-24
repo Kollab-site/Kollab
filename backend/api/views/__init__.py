@@ -1,7 +1,7 @@
 from .base import BaseViewSet, BaseAPIView, TimezoneMixin
 from .users import UserEndpoint, UpdateUserOnBoardedEndpoint
-from .influencer import InfluencerViewSet
 from .brand import BrandViewSet
+from .influencer import InfluencerViewSet
 
 __all__ = [
     'BaseViewSet',
@@ -9,6 +9,6 @@ __all__ = [
     'TimezoneMixin',
     'UserEndpoint',
     'UpdateUserOnBoardedEndpoint',
-    'InfluencerViewSet',
-    'BrandViewSet'
+    'BrandViewSet',
+    'InfluencerViewSet'
 ]
