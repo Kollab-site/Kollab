@@ -12,32 +12,35 @@ import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import { AuthProvider } from './context/AuthContext';
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop /> 
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/brands" element={<Brands />} />
-          <Route path="/creators" element={<Creators />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          {/* Placeholder routes */}
-          <Route path="/blog" element={<NotFound />} />
-          <Route path="/terms" element={<NotFound />} />
-          <Route path="/privacy" element={<NotFound />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ScrollToTop /> 
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/brands" element={<Brands />} />
+            <Route path="/creators" element={<Creators />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            {/* Placeholder routes */}
+            <Route path="/blog" element={<NotFound />} />
+            <Route path="/terms" element={<NotFound />} />
+            <Route path="/privacy" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </AuthProvider>
 );
 
 export default App;
