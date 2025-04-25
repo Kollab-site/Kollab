@@ -9,6 +9,7 @@ class InfluencerSerializer(BaseSerializer):
         model = Influencer
         fields = [
             'id',
+            'user',
             'niche',
             'preferred_platforms',
             'instagram_url',
@@ -20,8 +21,12 @@ class InfluencerSerializer(BaseSerializer):
             'website_url',
             'min_campaign_budget',
             'max_campaign_budget',
+            'content_type',
+            'target_demographic',
+            'created_at',
+            'updated_at',
         ]
-        read_only_fields = ['id']
+        read_only_fields = ['id', 'created_at', 'updated_at']
 
     def validate(self, data):
         if data['min_campaign_budget'] > data['max_campaign_budget']:

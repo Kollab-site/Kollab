@@ -32,6 +32,14 @@ class Influencer(BaseModel):
             ("linkedin", "LinkedIn"),
         )
 
+    class CONTENT_TYPE_CHOICES:
+        CHOICES = (
+            ("photos", "Photos"),
+            ("videos", "Videos"),
+            ("blogs", "Blogs"),
+            ("mixed", "Mixed Content"),
+        )
+
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
@@ -73,6 +81,16 @@ class Influencer(BaseModel):
         decimal_places=2,
         default=0,
         validators=[MinValueValidator(0)]
+    )
+
+    content_type = models.CharField(
+        max_length=20,
+        choices=CONTENT_TYPE_CHOICES.CHOICES,
+        default="mixed"
+    )
+    target_demographic = models.JSONField(
+        default=dict,
+        help_text="Target audience demographics"
     )
 
     class Meta:

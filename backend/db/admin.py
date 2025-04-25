@@ -38,8 +38,6 @@ class CustomUserAdmin(UserAdmin):
             "first_name",
             "last_name",
             "email",
-            "mobile_number",
-            "avatar",
         )}),
         (_("Status"), {"fields": (
             "is_active",
@@ -89,12 +87,11 @@ class InfluencerAdmin(admin.ModelAdmin):
         "user",
         "niche",
         "content_type",
-        "is_verified",
         "created_at",
     )
     list_filter = (
         "niche",
-        "is_verified",
+        "content_type",
     )
     search_fields = (
         "user__username",
@@ -111,13 +108,11 @@ class BrandAdmin(admin.ModelAdmin):
         "company_name",
         "industry",
         "company_size",
-        "is_verified",
         "created_at",
     )
     list_filter = (
         "industry",
         "company_size",
-        "is_verified",
     )
     search_fields = (
         "company_name",

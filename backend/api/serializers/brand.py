@@ -9,13 +9,17 @@ class BrandSerializer(BaseSerializer):
         model = Brand
         fields = [
             'id',
+            'user',
             'company_name',
+            'company_website',
             'industry',
             'company_size',
             'min_campaign_budget',
             'max_campaign_budget',
+            'created_at',
+            'updated_at',
         ]
-        read_only_fields = ['id']
+        read_only_fields = ['id', 'created_at', 'updated_at']
 
     def validate(self, data):
         if data['min_campaign_budget'] > data['max_campaign_budget']:

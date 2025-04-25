@@ -13,8 +13,6 @@ from backend.api.serializers.users import (
     ResetPasswordSerializer,
     BrandSignupSerializer,
     InfluencerSignupSerializer,
-    BrandSerializer,
-    InfluencerSerializer
 )
 from backend.db.models import User
 

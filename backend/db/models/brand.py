@@ -36,6 +36,7 @@ class Brand(BaseModel):
     
     # Company Information
     company_name = models.CharField(max_length=255)
+    company_website = models.URLField(max_length=200, blank=True)
     industry = models.CharField(
         max_length=50,
         choices=INDUSTRY_CHOICES.CHOICES,
