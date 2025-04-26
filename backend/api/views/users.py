@@ -11,8 +11,6 @@ from backend.api.serializers.users import (
     UserSerializer, 
     ChangePasswordSerializer,
     ResetPasswordSerializer,
-    BrandSignupSerializer,
-    InfluencerSignupSerializer,
 )
 from backend.db.models import User
 
