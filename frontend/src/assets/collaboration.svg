@@ -1,0 +1,84 @@
+<svg width="500" height="400" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .primary { fill: #FF6B6B; }
+    .secondary { fill: #4ECDC4; }
+    .accent { fill: #45B7AF; }
+    .dark { fill: #2C3E50; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    @keyframes glow {
+      0%, 100% { filter: drop-shadow(0 0 3px rgba(255, 107, 107, 0.6)); }
+      50% { filter: drop-shadow(0 0 8px rgba(255, 107, 107, 0.8)); }
+    }
+
+    @keyframes chart-grow {
+      from { transform: scaleY(0); }
+      to { transform: scaleY(1); }
+    }
+
+    @keyframes handshake {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-5deg); }
+      75% { transform: rotate(5deg); }
+    }
+
+    .puzzle { animation: float 3s ease-in-out infinite; }
+    .bulb { animation: glow 2s ease-in-out infinite; }
+    .bulb-inner { animation: pulse 2s ease-in-out infinite; }
+    .chart { animation: chart-grow 1.5s ease-out; transform-origin: bottom; }
+    .handshake-group { animation: handshake 3s ease-in-out infinite; }
+  </style>
+
+  <defs>
+    <linearGradient id="bg-gradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7f9fc"/>
+      <stop offset="100%" stop-color="#e3e8ef"/>
+    </linearGradient>
+    
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <rect width="100%" height="100%" fill="url(#bg-gradient)"/>
+  
+  <g transform="translate(50, 50)">
+    <!-- Puzzle pieces background with animation -->
+    <g class="puzzle">
+      <path class="secondary" opacity="0.15" filter="url(#shadow)" 
+            d="M320,40 l40,0 a20,20 0 0 1 20,20 l0,40 a20,20 0 0 0 20,20 l40,0 0,80 -40,0 
+               a20,20 0 0 0 -20,20 l0,40 a20,20 0 0 1 -20,20 l-40,0 0,-40 a20,20 0 0 0 -20,-20 
+               l-40,0 a20,20 0 0 1 -20,-20 l0,-40 40,0 a20,20 0 0 0 20,-20 l0,-40 a20,20 0 0 1 20,-20 l40,0z"/>
+    </g>
+
+    <!-- Light bulb with glow effect -->
+    <g class="bulb">
+      <circle class="bulb-inner primary" cx="50" cy="50" r="30"/>
+      <path class="dark" stroke-width="2" 
+            d="M35,65 l30,-30 M50,30 l0,10 M30,50 l10,0 M60,50 l10,0 M50,70 l0,10"/>
+    </g>
+
+    <!-- Animated chart -->
+    <g class="chart">
+      <path class="accent" filter="url(#shadow)"
+            d="M380,280 l0,-100 -20,0 0,100z M340,280 l0,-60 -20,0 0,60z M300,280 l0,-30 -20,0 0,30z"/>
+    </g>
+
+    <!-- Animated handshake -->
+    <g class="handshake-group" transform-origin="center">
+      <path class="dark" stroke-width="3" stroke-linecap="round"
+            d="M180,200 c30,-30 60,-30 90,0"/>
+      <circle class="primary" cx="160" cy="200" r="20" filter="url(#shadow)"/>
+      <circle class="secondary" cx="290" cy="200" r="20" filter="url(#shadow)"/>
+    </g>
+  </g>
+</svg> 

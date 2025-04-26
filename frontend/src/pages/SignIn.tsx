@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/common/Container";
 import axios from "axios";
 import { useAuth } from "@/context/AuthContext";
+import CollaborationImage from "@/assets/collaboration.svg";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -49,54 +50,75 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <Container size="sm" className="py-12">
-        <Card className="w-full max-w-lg mx-auto bg-white shadow-md border border-gray-200">
-          <CardHeader>
-            <CardTitle>Welcome Back</CardTitle>
-            <CardDescription>Sign in to your account to continue</CardDescription>
-          </CardHeader>
-          <form onSubmit={handleSubmit}>
-            <CardContent className="space-y-4">
-              {errorMsg && (
-                <div className="flex justify-center">
-                  <p className={`text-sm font-medium ${
-                    errorMsg.includes("successful") 
-                      ? "text-green-600" 
-                      : "text-red-500"
-                  }`}>
-                    {errorMsg}
-                  </p>
-                </div>
-              )}
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button type="submit" className="w-full" disabled={loading}>
-                Sign In
-              </Button>
-            </CardFooter>
-          </form>
-        </Card>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 flex items-center justify-center p-4">
+      <Container size="lg" className="py-12">
+        <div className="flex bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden max-w-5xl mx-auto border border-gray-100">
+          {/* Left side - Illustration */}
+          <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-gray-50 to-white p-12 items-center justify-center relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-purple-50/50 opacity-50"></div>
+            <img
+              src={CollaborationImage}
+              alt="Collaboration Illustration"
+              className="w-full max-w-md relative z-10 transform hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+
+          {/* Right side - Sign In Form */}
+          <div className="w-full md:w-1/2 p-8">
+            <div className="max-w-md mx-auto">
+              <CardHeader className="px-0">
+                <CardTitle className="text-3xl font-bold text-gray-900">Welcome Back</CardTitle>
+                <CardDescription className="text-gray-600 text-lg">Sign in to your account to continue</CardDescription>
+              </CardHeader>
+              <form onSubmit={handleSubmit}>
+                <CardContent className="space-y-4 px-0">
+                  {errorMsg && (
+                    <div className="flex justify-center">
+                      <p className={`text-sm font-medium ${
+                        errorMsg.includes("successful") 
+                          ? "text-green-600" 
+                          : "text-red-500"
+                      }`}>
+                        {errorMsg}
+                      </p>
+                    </div>
+                  )}
+                  <div>
+                    <Label htmlFor="email" className="text-gray-700">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="mt-1"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="password" className="text-gray-700">Password</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      className="mt-1"
+                    />
+                  </div>
+                </CardContent>
+                <CardFooter className="px-0">
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white" 
+                    disabled={loading}
+                  >
+                    Sign In
+                  </Button>
+                </CardFooter>
+              </form>
+            </div>
+          </div>
+        </div>
       </Container>
     </div>
   );
