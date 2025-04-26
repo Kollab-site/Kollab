@@ -7,6 +7,7 @@ from .users import (
 )
 from .brand import BrandSerializer
 from .influencer import InfluencerSerializer
+from .communication import ContactUsSerializer
 
 __all__ = [
     'BaseSerializer',
@@ -16,4 +17,5 @@ __all__ = [
     'ResetPasswordSerializer',
     'BrandSerializer',
     'InfluencerSerializer',
+    'ContactUsSerializer',
 ]

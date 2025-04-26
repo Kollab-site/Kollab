@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from .models import User
 from .models.influencer import Influencer
 from .models.brand import Brand
-
+from .models.communication import ContactUs
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
@@ -121,3 +121,5 @@ class BrandAdmin(admin.ModelAdmin):
     )
     readonly_fields = ("created_at", "updated_at")
     ordering = ("-created_at",) 
+
+admin.site.register(ContactUs)
