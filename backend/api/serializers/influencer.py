@@ -28,8 +28,4 @@ class InfluencerSerializer(BaseSerializer):
         ]
         read_only_fields = ['id', 'created_at', 'updated_at']
 
-    def validate(self, data):
-        if data['min_campaign_budget'] > data['max_campaign_budget']:
-            raise serializers.ValidationError("Minimum budget cannot be greater than maximum budget")
-        return data
 
