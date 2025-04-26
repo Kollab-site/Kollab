@@ -3,6 +3,8 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from .models import User
+from .models.influencer import Influencer
+from .models.brand import Brand
 
 
 @admin.register(User)
@@ -36,8 +38,6 @@ class CustomUserAdmin(UserAdmin):
             "first_name",
             "last_name",
             "email",
-            "mobile_number",
-            "avatar",
         )}),
         (_("Status"), {"fields": (
             "is_active",
@@ -78,4 +78,46 @@ class CustomUserAdmin(UserAdmin):
     def save_model(self, request, obj, form, change):
         if not change:  # Creating a new user
             obj.is_active = True
-        super().save_model(request, obj, form, change) 
+        super().save_model(request, obj, form, change)
+
+
+@admin.register(Influencer)
+class InfluencerAdmin(admin.ModelAdmin):
+    list_display = (
+        "user",
+        "niche",
+        "content_type",
+        "created_at",
+    )
+    list_filter = (
+        "niche",
+        "content_type",
+    )
+    search_fields = (
+        "user__username",
+        "user__email",
+        "content_type",
+    )
+    readonly_fields = ("created_at", "updated_at")
+    ordering = ("-created_at",)
+
+
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
+    list_display = (
+        "company_name",
+        "industry",
+        "company_size",
+        "created_at",
+    )
+    list_filter = (
+        "industry",
+        "company_size",
+    )
+    search_fields = (
+        "company_name",
+        "user__username",
+        "user__email",
+    )
+    readonly_fields = ("created_at", "updated_at")
+    ordering = ("-created_at",) 

@@ -11,21 +11,28 @@ class UserSerializer(BaseSerializer):
 
     class Meta:
         model = User
-        fields = "__all__"
-        read_only_fields = [
+        fields = [
             "id",
+            "uuid",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "is_active",
+            "is_staff",
             "created_at",
             "updated_at",
-            "is_superuser",
+        ]
+        read_only_fields = [
+            "id",
+            "uuid",
+            "created_at",
+            "updated_at",
             "is_staff",
-            "is_onboarded",
-            "is_password_autoset",
-            "is_email_verified",
         ]
         extra_kwargs = {
             "password": {"write_only": True},
             "username": {"validators": []},  # Remove default validators
-            "user_timezone": {"default": "UTC"},  # Set default timezone
         }
 
     def validate_username(self, value):
@@ -41,9 +48,6 @@ class UserSerializer(BaseSerializer):
         return value
 
     def create(self, validated_data):
-        # Ensure user_timezone is set
-        if 'user_timezone' not in validated_data:
-            validated_data['user_timezone'] = 'UTC'
         return super().create(validated_data)
 
     def update(self, instance, validated_data):
@@ -62,30 +66,15 @@ class UserMeSerializer(BaseSerializer):
         model = User
         fields = [
             "id",
-            "avatar",
-            "created_at",
+            "uuid",
+            "username",
             "email",
             "first_name",
             "last_name",
             "is_active",
-            "is_email_verified",
-            "is_onboarded",
-            "mobile_number",
-            "user_timezone",
-            "username",
-            "is_password_autoset",
-            "gender",
-            "bio",
-            "about",
-            "website",
-            "linkedin",
-            "github",
-            "twitter",
-            "instagram",
-            "cover_image",
-            "country",
-            "organization",
-            "mastodon",
+            "is_staff",
+            "created_at",
+            "updated_at",
         ]
         read_only_fields = fields
 
@@ -127,25 +116,15 @@ class UserLiteSerializer(BaseSerializer):
         model = User
         fields = [
             "id",
+            "uuid",
+            "username",
+            "email",
             "first_name",
             "last_name",
-            "avatar",
-            "username",
-            "bio",
-            "about",
-            "email",
-            "cover_image",
-            "website",
-            "linkedin",
-            "github",
-            "twitter",
-            "instagram",
-            "mastodon",
-            "country",
-            "organization",
         ]
         read_only_fields = [
             "id",
+            "uuid",
             "username",
             "email",
         ]
@@ -156,12 +135,15 @@ class UserAdminLiteSerializer(BaseSerializer):
         model = User
         fields = [
             "id",
-            "first_name",
-            "last_name",
-            "avatar",
+            "uuid",
             "username",
             "email",
+            "first_name",
+            "last_name",
+            "is_active",
+            "is_staff",
         ]
         read_only_fields = [
             "id",
+            "uuid",
         ]

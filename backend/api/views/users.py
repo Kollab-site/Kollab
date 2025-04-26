@@ -10,7 +10,9 @@ from backend.api.serializers.users import (
     UserMeSerializer, 
     UserSerializer, 
     ChangePasswordSerializer,
-    ResetPasswordSerializer
+    ResetPasswordSerializer,
+    BrandSignupSerializer,
+    InfluencerSignupSerializer,
 )
 from backend.db.models import User
 
@@ -21,6 +23,7 @@ class UserEndpoint(BaseViewSet):
     serializer_class = UserSerializer
     model = User
     permission_classes = [IsAuthenticated]
+
 
     def get_object(self):
         return self.request.user
@@ -206,8 +209,6 @@ class UserEndpoint(BaseViewSet):
             )
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 class UpdateUserOnBoardedEndpoint(BaseAPIView):
     def patch(self, request):
         user = User.objects.get(pk=request.user.id, is_active=True)
