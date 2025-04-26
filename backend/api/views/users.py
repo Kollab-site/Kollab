@@ -24,12 +24,6 @@ class UserEndpoint(BaseViewSet):
     model = User
     permission_classes = [IsAuthenticated]
 
-    def get_serializer_class(self):
-        if self.action == 'brand_signup':
-            return BrandSignupSerializer
-        elif self.action == 'influencer_signup':
-            return InfluencerSignupSerializer
-        return super().get_serializer_class()
 
     def get_object(self):
         return self.request.user
@@ -70,7 +64,7 @@ class UserEndpoint(BaseViewSet):
 
     # Authentication methods
     def get_permissions(self):
-        if self.action in ['login', 'register', 'brand_signup', 'influencer_signup', 'reset_password', 'verify_email']:
+        if self.action in ['login', 'register', 'reset_password', 'verify_email']:
             return [AllowAny()]
         return super().get_permissions()
         
