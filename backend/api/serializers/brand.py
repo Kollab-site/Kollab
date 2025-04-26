@@ -16,7 +16,5 @@ class BrandSerializer(BaseSerializer):
             'company_size',
             'min_campaign_budget',
             'max_campaign_budget',
-            'created_at',
-            'updated_at',
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        read_only_fields = ['id']
