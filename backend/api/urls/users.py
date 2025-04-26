@@ -13,8 +13,6 @@ urlpatterns = [
     # Authentication endpoints
     path("auth/login/", UserEndpoint.as_view({"post": "login"}), name="auth-login"),
     path("auth/register/", UserEndpoint.as_view({"post": "register"}), name="auth-register"),
-    path("auth/brand/signup/", UserEndpoint.as_view({"post": "brand_signup"}), name="auth-brand-signup"),
-    path("auth/influencer/signup/", UserEndpoint.as_view({"post": "influencer_signup"}), name="auth-influencer-signup"),
     path("auth/logout/", UserEndpoint.as_view({"post": "logout"}), name="auth-logout"),
     path("auth/verify-email/", UserEndpoint.as_view({"post": "verify_email"}), name="auth-verify-email"),
     path("auth/reset-password/", UserEndpoint.as_view({"post": "reset_password"}), name="auth-reset-password"),
