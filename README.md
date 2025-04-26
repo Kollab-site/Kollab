@@ -1,6 +1,6 @@
-# Reachly
+# Kollab
 
-A modern web application built with React, TypeScript, and Vite, featuring a beautiful UI and robust functionality.
+A modern web application for connecting brands and influencers, built with Django, React, TypeScript, and Vite.
 
 ## 🚀 Features
 
@@ -9,70 +9,90 @@ A modern web application built with React, TypeScript, and Vite, featuring a bea
 - **Responsive Design**: Works seamlessly across all devices
 - **Type Safety**: Built with TypeScript for better developer experience
 - **Fast Development**: Powered by Vite for lightning-fast builds
+- **Dockerized**: Easy deployment with Docker and Docker Compose
+- **PostgreSQL**: Robust database support
 
 ## 🛠️ Tech Stack
 
 - **Frontend**: React 18, TypeScript, Vite
+- **Backend**: Django, Django REST Framework
+- **Database**: PostgreSQL
 - **Styling**: Tailwind CSS, shadcn/ui components
 - **State Management**: React Context API
 - **Routing**: React Router v6
 - **Form Handling**: React Hook Form
 - **Validation**: Zod
+- **Containerization**: Docker, Docker Compose
 
 ## 📦 Getting Started
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
-- npm or yarn
+- Docker and Docker Compose
+- Node.js (v18 or higher) - for local development
+- Python 3.11 - for local development
 
-### Installation
+### Docker Setup
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/reachly.git
-   cd reachly
+   git clone https://github.com/yourusername/kollab.git
+   cd kollab
    ```
 
-2. Install dependencies:
+2. Build and start the containers:
 
    ```bash
+   docker compose up --build
+   ```
+
+3. Access the application:
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:8000
+   - PostgreSQL: localhost:5432
+
+### Local Development Setup
+
+1. Install dependencies:
+
+   ```bash
+   # Frontend
+   cd frontend
    npm install
-   # or
-   yarn install
+
+   # Backend
+   cd ../backend
+   pip install -r requirements/local.txt
    ```
 
-3. Start the development server:
+2. Start the development servers:
 
    ```bash
+   # Frontend
+   cd frontend
    npm run dev
-   # or
-   yarn dev
-   ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+   # Backend
+   cd backend
+   python manage.py runserver
+   ```
 
 ## 📁 Project Structure
 
 ```
-reachly/
-├── src/
-│   ├── components/     # Reusable UI components
-│   ├── pages/         # Page components
-│   ├── layouts/       # Layout components
-│   ├── hooks/         # Custom React hooks
-│   ├── context/       # React Context providers
-│   ├── types/         # TypeScript type definitions
-│   ├── utils/         # Utility functions
-│   ├── App.tsx        # Main application component
-│   └── main.tsx       # Application entry point
-├── public/            # Static assets
-├── index.html         # HTML template
-├── package.json       # Project dependencies
-├── tsconfig.json      # TypeScript configuration
-├── vite.config.ts     # Vite configuration
-└── tailwind.config.js # Tailwind CSS configuration
+kollab/
+├── frontend/          # React frontend application
+│   ├── src/          # Source files
+│   ├── public/       # Static assets
+│   └── package.json  # Frontend dependencies
+├── backend/          # Django backend application
+│   ├── api/          # API endpoints
+│   ├── db/           # Database models
+│   └── settings.py   # Django settings
+├── requirements/     # Python dependencies
+├── docker-compose.yml # Docker Compose configuration
+└── README.md         # Project documentation
 ```
 
 ## 🤝 Contributing
@@ -94,3 +114,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [shadcn/ui](https://ui.shadcn.com/) for the beautiful UI components
 - [Vite](https://vitejs.dev/) for the amazing development experience
 - [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
+- [Django](https://www.djangoproject.com/) for the robust backend framework
