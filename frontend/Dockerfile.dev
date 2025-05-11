@@ -1,0 +1,36 @@
+# Build stage
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+# Copy package files first to leverage Docker cache
+COPY package*.json ./
+
+# Install dependencies with cache mount
+RUN --mount=type=cache,target=/root/.npm \
+    npm ci
+
+# Copy project files
+COPY . .
+
+# Development stage
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy built node_modules and package files
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+
+# Copy source code
+COPY . .
+
+# Expose port for development server
+EXPOSE 8080
+
+# Add healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD wget --spider http://localhost:8080 || exit 1
+
+# Start development server with hot reloading
+CMD ["npm", "run", "dev"] 

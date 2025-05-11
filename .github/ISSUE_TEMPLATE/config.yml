@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions & Discussions
+    url: https://github.com/yourusername/Kollab/discussions
+    about: Please ask and answer questions here.
+  - name: Community Chat
+    url: https://discord.gg/your-discord
+    about: Join our community chat for real-time discussions.

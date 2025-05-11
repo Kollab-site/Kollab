@@ -1,0 +1,27 @@
+# Build stage
+FROM node:18-alpine as builder
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy project files
+COPY . .
+
+# Build the app
+RUN npm run build
+
+# Production stage - only build, no serving
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy built assets from build stage
+COPY --from=builder /app/dist ./dist
+
+# Create a simple command to indicate build is complete
+CMD ["echo", "Frontend build complete. Use Nginx to serve the static files."] 

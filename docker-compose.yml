@@ -4,34 +4,66 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: ${FRONTEND_DOCKERFILE:-Dockerfile.dev}
     ports:
-      - "3000:80"
+      - "8080:${FRONTEND_PORT:-8080}"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     environment:
       - VITE_API_URL=http://localhost:8000
-      - NODE_ENV=development
+      - NODE_ENV=${NODE_ENV:-development}
     networks:
       - app-network
-    command: sh -c "sleep 10 && nginx -g 'daemon off;'"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: ${FRONTEND_COMMAND:-npm run dev}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
 
   backend:
     build:
       context: .
-      dockerfile: backend/Dockerfile
+      dockerfile: backend/${BACKEND_DOCKERFILE:-Dockerfile.dev}
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/kollab
-      - DEBUG=1
-      - SECRET_KEY=django-insecure-local-development-key
+      - DEBUG=${DEBUG:-1}
+      - SECRET_KEY=${SECRET_KEY:-django-insecure-local-development-key}
       - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,backend
-      - CORS_ALLOWED_ORIGINS=http://localhost:3000
+      - CORS_ALLOWED_ORIGINS=http://localhost:8080
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+    volumes:
+      - ./backend:/app/backend
     networks:
       - app-network
+    command: python manage.py runserver 0.0.0.0:8000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
 
   db:
     image: postgres:15-alpine
@@ -45,6 +77,17 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 256M
 
 networks:
   app-network:
@@ -52,3 +95,4 @@ networks:
 
 volumes:
   postgres_data:
+    name: kollab_postgres_data
