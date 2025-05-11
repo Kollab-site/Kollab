@@ -105,8 +105,12 @@ const Creators = () => {
               Connect with brands that value your unique voice and audience. Maximize your earning potential while staying true to your content vision.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="bg-brand-orange hover:bg-opacity-70 text-white border-none" size="lg">
-                Join as Creator
+              <Button 
+                className="bg-brand-orange hover:bg-opacity-70 text-white border-none" 
+                size="lg"
+                onClick={() => window.location.href = '/creator-campaign'}
+              >
+                Start a Campaign
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button variant="outline" className="bg-white/10 backdrop-blur border-white/20 text-white hover:bg-white/20" size="lg">

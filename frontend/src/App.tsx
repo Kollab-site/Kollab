@@ -13,6 +13,9 @@ import NotFound from "./pages/NotFound";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import { AuthProvider } from './context/AuthContext';
+import CreatorCampaign from "./pages/CreatorCampaign";
+import CreatorDashboard from './pages/CreatorDashboard';
+import CreatorsList from './pages/CreatorsList';
 
 const queryClient = new QueryClient();
 
@@ -31,6 +34,9 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/creator-campaign" element={<CreatorCampaign />} />
+            <Route path="/creator-dashboard" element={<CreatorDashboard />} />
+            <Route path="/creators-list" element={<CreatorsList />} />
             {/* Placeholder routes */}
             <Route path="/blog" element={<NotFound />} />
             <Route path="/terms" element={<NotFound />} />
