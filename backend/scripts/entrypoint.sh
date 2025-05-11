@@ -18,15 +18,27 @@ if [ -n "$POSTGRES_HOST" ] && [ -n "$POSTGRES_PORT" ]; then
 fi
 
 # Run migrations
+echo "Running migrations..."
 python manage.py migrate
 
 # Create admin user if it doesn't exist
+echo "Checking for admin user..."
 python manage.py shell -c "
 from django.contrib.auth import get_user_model
 User = get_user_model()
 if not User.objects.filter(username='admin').exists():
-    User.objects.create_superuser('admin', 'admin@example.com', 'admin')
+    print('Creating admin user...')
+    admin = User.objects.create_superuser(
+        username='admin',
+        email='admin@kollab.com',
+        password='admin123',
+        is_staff=True,
+        is_superuser=True
+    )
     print('Admin user created successfully!')
+    print(f'Username: admin')
+    print(f'Email: admin@kollab.com')
+    print(f'Password: admin123')
 else:
     print('Admin user already exists.')
 "

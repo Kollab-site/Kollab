@@ -1,66 +1,56 @@
-# Define an alias for the specific Python version
-FROM python:3.11.9-slim-bullseye as python
+# Build stage
+FROM python:3.11.9-slim-bullseye as builder
 
-# Python build stage
-FROM python as python-build-stage
-
-# Install apt packages
+# Install build dependencies
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    # dependencies for building Python packages
     build-essential \
-    # psycopg2 dependencies
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Requirements are installed here to ensure they will be cached
-COPY requirements/base.txt ./base.txt
-COPY requirements/dev.txt ./dev.txt
+WORKDIR /app
 
-# Create Python Dependency and Sub-Dependency Wheels
-RUN pip wheel --wheel-dir /usr/src/app/wheels \
-    -r dev.txt
+# Copy requirements files first to leverage Docker cache
+COPY requirements/base.txt requirements/dev.txt ./
 
-# Python 'run' stage
-FROM python as python-run-stage
+# Create and activate virtual environment
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
-ARG APP_HOME=/app
+# Install dependencies with cache mount
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --no-cache-dir -r dev.txt
 
-ENV PYTHONUNBUFFERED 1
-ENV PYTHONDONTWRITEBYTECODE 1
+# Final stage
+FROM python:3.11.9-slim-bullseye
 
-WORKDIR ${APP_HOME}
-
-# Install required system dependencies
+# Install runtime dependencies
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    # psycopg2 dependencies
     libpq-dev \
-    # Translations dependencies
     gettext \
-    # Development tools
     curl \
     vim \
-    # Network tools
     netcat-traditional \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy python dependency wheels from python-build-stage
-COPY --from=python-build-stage /usr/src/app/wheels /wheels/
+# Copy virtual environment from builder
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
-# Use wheels to install python dependencies
-RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
-    && rm -rf /wheels/
+WORKDIR /app
 
 # Copy entrypoint and start scripts
 COPY backend/scripts/entrypoint.sh /entrypoint.sh
-RUN sed -i 's/\r$//g' /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN sed -i 's/\r$//g' /entrypoint.sh && chmod +x /entrypoint.sh
 
 COPY backend/scripts/start-dev.sh /start-dev.sh
-RUN sed -i 's/\r$//g' /start-dev.sh
-RUN chmod +x /start-dev.sh
+RUN sed -i 's/\r$//g' /start-dev.sh && chmod +x /start-dev.sh
 
 # Copy project files
 COPY manage.py .
 COPY backend/ ./backend/
+
+# Add healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/health/ || exit 1
 
 ENTRYPOINT ["/entrypoint.sh"] 
