@@ -1,9 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight, BarChart2, PieChart, TrendingUp, MessageCircle, Video, Phone, Users, Lightbulb, Target, Layers, Zap } from 'lucide-react';
+import { ArrowRight, BarChart2, PieChart, TrendingUp, MessageCircle, Video, Phone, Users, Lightbulb, Target, Layers, Zap, Award } from 'lucide-react';
 import TeamMember from '@/components/brands/TeamMember';
 import ImpactCard from '@/components/brands/ImpactCard';
 import ApproachStep from '@/components/brands/ApproachStep';
@@ -11,6 +12,8 @@ import { Container } from '@/components/common/Container';
 import ContactForm from '@/components/brands/ContactForm';
 
 const Brands = () => {
+  const navigate = useNavigate();
+
   const impactData = [
     {
       title: "Increased ROI",
@@ -52,7 +55,7 @@ const Brands = () => {
       name: "Marcus Robbins",
       role: "Chief Technology Officer",
       bio: "Tech visionary with background in AI and machine learning algorithms",
-      imgUrl: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+      imgUrl: "https://images.unsplash.com/photo-1560250097-0b93528c63b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
     },
     {
       name: "Maya Patel",
@@ -105,8 +108,12 @@ const Brands = () => {
               Connect with the perfect influencers to amplify your brand's message and drive measurable results.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="bg-brand-orange hover:bg-opacity-90 text-white border-none" size="lg">
-                Request Demo
+              <Button 
+                className="bg-brand-orange hover:bg-opacity-70 text-white border-none" 
+                size="lg"
+                onClick={() => navigate('/creators-list')}
+              >
+                Browse Creators
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button variant="outline" className="bg-white/10 backdrop-blur border-white/20 text-white hover:bg-white/20" size="lg">

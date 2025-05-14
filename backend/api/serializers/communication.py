@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from backend.db.models.communication import ContactUs
 
-class ContactUsSerializer(serializers.Serializer):
+class ContactUsSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(max_length=100)
     last_name = serializers.CharField(max_length=100)
     email = serializers.EmailField()
